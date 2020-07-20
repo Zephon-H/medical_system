@@ -1,8 +1,15 @@
 # Project exclude paths
-/common/target/
-/doctor-server/target/
-/drug-server/target/
-/gateway/target/
-/outpatient-server/target/
-/public-server/target/
-/register-server/target/
+/common/target/**
+/common/target/!target/*.jar
+/doctor-server/target/**
+/doctor-server/target/*.jar
+/drug-server/target/**
+/drug-server/target/*.jar
+/gateway/target/**
+/gateway/target/*.jar
+/outpatient-server/target/**
+/outpatient-server/target/*.jar
+/public-server/target/**
+/public-server/target/*.jar
+/register-server/target/**
+/register-server/target/*.jar

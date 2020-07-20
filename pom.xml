@@ -140,16 +140,16 @@
                 <artifactId>docker-maven-plugin</artifactId>
                 <version>1.2.2</version>
                 <!--将插件绑定在某个phase执行-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>build-image</id>-->
-<!--                        &lt;!&ndash;将插件绑定在package这个phase上。也就是说，用户只需执行mvn package ，就会自动执行mvn docker:build&ndash;&gt;-->
-<!--                        <goals>-->
-<!--                            <goal>build</goal>-->
-<!--                        </goals>-->
-<!--                        <phase>package</phase>-->
-<!--                    </execution>-->
-<!--                </executions>-->
+                <!--                <executions>-->
+                <!--                    <execution>-->
+                <!--                        <id>build-image</id>-->
+                <!--                        &lt;!&ndash;将插件绑定在package这个phase上。也就是说，用户只需执行mvn package ，就会自动执行mvn docker:build&ndash;&gt;-->
+                <!--                        <goals>-->
+                <!--                            <goal>build</goal>-->
+                <!--                        </goals>-->
+                <!--                        <phase>package</phase>-->
+                <!--                    </execution>-->
+                <!--                </executions>-->
 
                 <configuration>
                     <!--指定生成的镜像名-->
@@ -175,6 +175,16 @@
                             <include>${project.build.finalName}.jar</include>
                         </resource>
                     </resources>
+
+<!--                    <username>1528498238@qq.com</username>-->
+<!--                    &lt;!&ndash;在容器镜像服务控制台"设置Registry登录密码"&ndash;&gt;-->
+<!--                    <password>******</password>-->
+<!--                    &lt;!&ndash;registry.cn-hangzhou.aliyuncs.com/namespace/repositoryname&ndash;&gt;-->
+<!--                    <repository>registry.cn-shanghai.aliyuncs.com/zephon/medical</repository>-->
+<!--                    <tag>latest</tag>-->
+<!--                    <buildArgs>-->
+<!--                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>-->
+<!--                    </buildArgs>-->
 
                     <!-- 以下两行是为了docker push到DockerHub使用的。 -->
                     <!--                    <serverId>docker-hub</serverId>-->
