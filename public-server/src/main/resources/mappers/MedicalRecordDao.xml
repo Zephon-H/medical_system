@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zephon.pub.dao.MedicalRecordDao">
+    <resultMap id="recordMap" type="com.zephon.common.model.MedicalRecord">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="gender" property="gender"/>
+        <result column="age" property="age"/>
+        <result column="contract" property="contract"/>
+        <result column="pay_status" property="payStatus"/>
+        <result column="pay_time" property="payTime"/>
+        <result column="amount" property="amount"/>
+        <result column="self_paying" property="selfPaying"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <association property="doctor" javaType="com.zephon.common.model.Employee">
+            <id column="doctor_id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="password" property="password"/>
+            <result column="name" property="name"/>
+            <result column="phone" property="phone"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="del_flag" property="delFlag"/>
+        </association>
+        <association property="department" javaType="com.zephon.common.model.Department">
+            <id column="depart_id" property="id"/>
+            <result column="depart_name" property="departName"/>
+            <result column="depart_code" property="departCode"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="del_flag" property="delFlag"/>
+        </association>
+        <association property="operator" javaType="com.zephon.common.model.Employee">
+            <id column="doctor_id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="password" property="password"/>
+            <result column="name" property="name"/>
+            <result column="phone" property="phone"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="del_flag" property="delFlag"/>
+        </association>
+    </resultMap>
+
+    <select id="findById" resultMap="recordMap">
+        select *
+        from tb_medical_record
+        where id = #{id}
+          and del_flag = '0'
+    </select>
+    <select id="findByCondition" resultMap="recordMap">
+        select * from tb_medical_record
+        <where>
+            <if test="id!=null and id!=''">
+                id=#{id}
+            </if>
+            <if test="name!=null and name!=''">
+                and name=#{name}
+            </if>
+            <if test="gender!=null and gender!=''">
+                and gender=#{gender}
+            </if>
+            <if test="age!=null">
+                and age=#{age}
+            </if>
+            <if test="contract!=null and contract!=''">
+                and contract=#{contract}
+            </if>
+            <if test="payStatus!=null and payStatus!=''">
+                and pay_status=#{payStatus}
+            </if>
+            <if test="payTime!=null">
+                and pay_time=#{payTime}
+            </if>
+            <if test="amount!=null">
+                and amount=#{amount}
+            </if>
+            <if test="selfPaying!=null">
+                and self_paying=#{selfPaying}
+            </if>
+
+        </where>
+    </select>
+    <insert id="insert" parameterType="com.zephon.common.model.MedicalRecord">
+        insert into tb_medical_record(id, name, gender, doctor_id, age, depart_id, contract, pay_status, pay_time,
+                                      operator_id, amount, self_paying, update_time)
+        values (#{id}, #{name}, #{gender}, #{doctor.id}, #{age}, #{department.id}, #{contract}, #{payStatus},
+                #{payTime}, #{operator.id}, #{amount}, #{selfPaying}, #{updateTime})
+    </insert>
+    <update id="update" parameterType="com.zephon.common.model.MedicalRecord">
+        update tb_medical_record
+        <set>
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="gender!=null and gender!=''">
+                gender=#{gender},
+            </if>
+            <if test="doctor!=null">
+                doctor_id=#{doctor.id},
+            </if>
+            <if test="age!=null">
+                age=#{age},
+            </if>
+            <if test="department!=null">
+                depart_id=#{department_id},
+            </if>
+            <if test="contract!=null and contract!=''">
+                contract=#{contract},
+            </if>
+            <if test="payStatus!=null and payStatus!=''">
+                pay_status=#{payStatus},
+            </if>
+            <if test="payTime!=null">
+                pay_time=#{payTime},
+            </if>
+            <if test="operator!=null">
+                operator_id=#{operator.id},
+            </if>
+            <if test="amount!=null">
+                amount=#{amount},
+            </if>
+            <if test="selfPaying!=null">
+                self_paying=#{selfPaying},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <if test="delFlag!=null">
+                del_flag=#{delFlag}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="findAll" resultMap="recordMap">
+        select *
+        from tb_medical_record mr,
+             medical.tb_employee e1,
+             medical.tb_employee e2,
+             medical.tb_department d
+        where mr.doctor_id = e1.id
+          and mr.depart_id = d.id
+          and mr.operator_id = e2.id
+          and mr.del_flag != '1'
+    </select>
+</mapper>

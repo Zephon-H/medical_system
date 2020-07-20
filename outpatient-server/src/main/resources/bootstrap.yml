@@ -1,0 +1,14 @@
+server:
+  port: 11001
+spring:
+  application:
+    name: outpatient-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 # Nacos 服务注册中心地址
+      config:
+        server-addr: localhost:8848 # Nacos作为配置中心地址
+        file-extension: yml # 指定 yaml格式的配置
+        namespace: af7d9b31-23d4-488d-ab0e-16474f2ab326
+        group: DEFAULT_GROUP

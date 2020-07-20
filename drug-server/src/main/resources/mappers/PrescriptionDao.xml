@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zephon.drug.dao.PrescriptionDao">
+    <resultMap id="presMap" type="com.zephon.drug.pojo.Prescription">
+        <result column="record_id" property="recordId"/>
+        <collection property="drugList" column="drug_id" ofType="com.zephon.drug.pojo.PresDrug">
+            <result column="drug_count" property="count"/>
+            <association property="drug" column="drug_id" javaType="com.zephon.common.model.Drug">
+                <!-- mybatis bug 报错 -->
+                <id property="id" column="drug_id"/>
+                <result property="drugCode" column="drug_code"/>
+                <result property="drugName" column="drug_name"/>
+                <result property="unit" column="unit"/>
+                <result property="price" column="price"/>
+                <result property="updateTime" column="updateTime"/>
+                <result property="delFlag" column="del_flag"/>
+            </association>
+        </collection>
+    </resultMap>
+    <select id="findAll" resultMap="presMap">
+        select * from tb_drug_medical_record left join tb_drug td on tb_drug_medical_record.drug_id = td.id
+    </select>
+
+</mapper>

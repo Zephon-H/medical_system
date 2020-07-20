@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zephon.pub.dao.EmployeeDao">
+    <resultMap id="employeeMap" type="com.zephon.common.model.Employee">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="name" property="name"/>
+        <result column="password" property="password"/>
+        <result column="phone" property="phone"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="del_flag" property="delFlag"/>
+        <association property="department" javaType="com.zephon.common.model.Department">
+            <id column="depart_id" property="id"/>
+            <result column="depart_name" property="departName"/>
+            <result column="depart_code" property="departCode"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="del_flag" property="delFlag"/>
+        </association>
+    </resultMap>
+
+    <select id="findById" resultMap="employeeMap">
+        select *
+        from tb_employee,
+             medical.tb_department
+        where tb_employee.depart_id = tb_department.id
+          and tb_employee.id = #{id}
+          and tb_employee.del_flag != '1'
+    </select>
+    <select id="findByCondition" resultMap="employeeMap">
+        select * from tb_employee
+        <where>
+            <if test="id!=null and id!=''">
+                id=#{id}
+            </if>
+            <if test="username!=null and username!=''">
+                and username=#{username}
+            </if>
+            <if test="password!=null and password!=''">
+                and password=#{password}
+            </if>
+            <if test="name!=null and name!=''">
+                and name=#{name}
+            </if>
+            <if test="phone!=null and phone!=''">
+                and phone=#{phone}
+            </if>
+        </where>
+    </select>
+    <insert id="insert" parameterType="com.zephon.common.model.Employee">
+        insert into tb_employee(id, username, password, name, depart_id, phone, update_time)
+        values (#{id}, #{username}, #{password}, #{name}, #{department.id}, #{phone}, #{updateTime})
+    </insert>
+    <update id="update" parameterType="com.zephon.common.model.Employee">
+        update tb_employee
+        <set>
+            <if test="username!=null and username!=''">
+                username=#{username},
+            </if>
+            <if test="password!=null and password!=''">
+                password=#{password},
+            </if>
+            <if test="name!=null and name!=''">
+                name=#{name},
+            </if>
+            <if test="department!=null">
+                depart_id=#{department.id},
+            </if>
+            <if test="phone!=null and phone!=''">
+                phone=#{phone},
+            </if>
+            <if test="updateTime!=null">
+                update_time=#{updateTime},
+            </if>
+            <if test="delFlag!=null">
+                del_flag=#{delFlag}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="findAll" resultMap="employeeMap">
+        select *
+        from tb_employee,
+             medical.tb_department
+        where tb_employee.depart_id = tb_department.id
+          and tb_employee.del_flag != '1'
+    </select>
+</mapper>

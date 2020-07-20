@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zephon.outpatient.dao.OutpatientDao">
+    <select id="findByDepartId" resultType="com.zephon.common.model.Employee">
+        select *
+        from tb_employee
+        where depart_id = #{departId}
+          and tb_employee.del_flag != '1'
+    </select>
+</mapper>

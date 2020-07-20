@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zephon.doctor.dao.PrescriptionDao">
+    <insert id="insert" parameterType="com.zephon.doctor.pojo.PresDrug">
+        insert into tb_drug_medical_record(drug_id, record_id, drug_count)
+        values (#{drugId}, #{recordId}, #{count})
+    </insert>
+    <update id="updateRecord" parameterType="com.zephon.doctor.pojo.Prescription">
+        update tb_medical_record
+        <set>
+            <if test="amount!=null">
+                amount=#{amount}
+            </if>
+        </set>
+        where id=#{recordId}
+    </update>
+</mapper>

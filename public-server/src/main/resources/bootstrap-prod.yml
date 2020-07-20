@@ -1,0 +1,14 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: public-server
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 101.200.58.159:8848 # Nacos 服务注册中心地址
+      config:
+        server-addr: 101.200.58.159:8848 # Nacos作为配置中心地址
+        file-extension: yml # 指定 yaml格式的配置
+        namespace: b67d41be-5803-419a-929a-800f25bb7868
+        group: DEFAULT_GROUP

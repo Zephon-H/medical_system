@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <option name="USE_RELEASE_OPTION" value="false" />
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="outpatient-server" />
+        <module name="common" />
+        <module name="register-server" />
+        <module name="gateway" />
+        <module name="drug-server" />
+        <module name="public-server" />
+        <module name="doctor-server" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel target="8">
+      <module name="common" target="8" />
+      <module name="doctor-server" target="1.8" />
+      <module name="drug-server" target="1.8" />
+      <module name="gateway" target="1.8" />
+      <module name="medical_system" target="1.8" />
+      <module name="outpatient-server" target="1.8" />
+      <module name="public-server" target="1.8" />
+      <module name="register-server" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

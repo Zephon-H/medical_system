@@ -1,0 +1,8 @@
+# Project exclude paths
+/common/target/
+/doctor-server/target/
+/drug-server/target/
+/gateway/target/
+/outpatient-server/target/
+/public-server/target/
+/register-server/target/
