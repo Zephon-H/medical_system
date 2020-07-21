@@ -18,7 +18,7 @@ public interface PrescriptionDao {
 
     void update(PresDrug presDrug);
 
-    PresDrug findByDrugIdAndRecordId(PresDrug presDrug);
+    PresDrug findByDrugIdAndRecordId(String drugId,String recordId);
 
     void updateRecord(Prescription prescription);
 }

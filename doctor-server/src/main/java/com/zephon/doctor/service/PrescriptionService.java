@@ -24,7 +24,7 @@ public class PrescriptionService {
         List<PresDrug> drugList = prescription.getDrugList();
         for (PresDrug presDrug : drugList) {
             presDrug.setRecordId(prescription.getRecordId());
-            PresDrug p = prescriptionDao.findByDrugIdAndRecordId(presDrug);
+            PresDrug p = prescriptionDao.findByDrugIdAndRecordId(presDrug.getDrugId(),presDrug.getRecordId());
             if(p!=null){
                 prescriptionDao.update(presDrug);
             }else{

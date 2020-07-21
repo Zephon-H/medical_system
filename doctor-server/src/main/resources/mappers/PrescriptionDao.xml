@@ -14,16 +14,12 @@
     <select id="findByDrugIdAndRecordId" resultType="com.zephon.doctor.pojo.PresDrug">
         select drug_id as drugId,record_id as recordId,drug_count as count
         from tb_drug_medical_record
-        where drug_id = #{drugId}
-          and record_id = #{recordId}
+        where drug_id = #{param1}
+          and record_id = #{param2}
     </select>
     <update id="updateRecord" parameterType="com.zephon.doctor.pojo.Prescription">
         update tb_medical_record
-        <set>
-            <if test="amount!=null">
-                amount=#{amount}
-            </if>
-        </set>
+        set amount=#{amount}
         where id=#{recordId}
     </update>
 </mapper>
