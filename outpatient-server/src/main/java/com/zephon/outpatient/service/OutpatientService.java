@@ -5,6 +5,7 @@ import com.zephon.outpatient.dao.OutpatientDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,5 +23,9 @@ public class OutpatientService {
 
     public List<Employee> findByDepartId(String departId) {
         return outpatientDao.findByDepartId(departId);
+    }
+
+    public void updateMedicalRecord(String id) {
+        outpatientDao.updateMedicalRecord(id,new Date());
     }
 }

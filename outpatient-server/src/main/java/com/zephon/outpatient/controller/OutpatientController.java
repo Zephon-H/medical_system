@@ -5,10 +5,12 @@ import com.zephon.common.model.MedicalRecord;
 import com.zephon.common.pojo.Result;
 import com.zephon.outpatient.api.DrugApi;
 import com.zephon.outpatient.api.MedicalRecordApi;
+import com.zephon.outpatient.pojo.Prescription;
 import com.zephon.outpatient.service.OutpatientService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,9 +52,9 @@ public class OutpatientController {
     @ApiOperation(value="药品收费", notes="")
     @ApiImplicitParam(name="access-token",paramType = "header")
     public Result charge(@RequestBody MedicalRecord medicalRecord){
-        medicalRecord.setPayStatus("1");
-        medicalRecord.setPayTime(new Date());
-        return medicalRecordApi.update(medicalRecord);
+        String id = medicalRecord.getId();
+        outpatientService.updateMedicalRecord(id);
+        return new Result("修改成功",200);
     }
 
     @PostMapping("")
@@ -81,5 +83,15 @@ public class OutpatientController {
 //            e.printStackTrace();
         }
         return new Result("查询失败",500);
+    }
+
+    @PutMapping("/{preId}")
+    @ApiOperation(value="更新处方信息", notes="")
+    @ApiImplicitParam(name="access-token",paramType = "header")
+    public Result updatePrescription(@RequestBody Prescription prescription,@PathVariable("preId") String preId){
+        if(!StringUtils.isBlank(preId)){
+            prescription.setRecordId(preId);
+        }
+        return drugApi.updatePrescription(prescription,preId);
     }
 }

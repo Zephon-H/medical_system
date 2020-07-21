@@ -9,7 +9,10 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,7 +31,7 @@ public class DrugController {
     @Autowired
     private PrescriptionService prescriptionService;
     @GetMapping("")
-    @ApiOperation(value="查询所有处方信息", notes="")
+    @ApiOperation(value="查询所有已付款的处方信息", notes="")
     @ApiImplicitParam(name="access-token",paramType = "header")
     public Result findAllPrescription(){
         List<Prescription> list = prescriptionService.findAll();
@@ -45,5 +48,18 @@ public class DrugController {
 //            e.printStackTrace();
         }
         return new Result("查询失败",500);
+    }
+
+    @PutMapping("/{recordId}")
+    @ApiOperation(value="更新处方", notes="",hidden = true)
+    @ApiImplicitParam(name="access-token",paramType = "header")
+    public Result updatePrescription(@RequestBody Prescription prescription,@PathVariable("recordId") String recordId){
+        try {
+            prescriptionService.updatePrescription(prescription,recordId);
+            return new Result("更新成功",200);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return new Result("更新失败",500);
     }
 }

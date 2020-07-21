@@ -4,6 +4,7 @@ import com.zephon.common.model.Employee;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -17,4 +18,6 @@ import java.util.List;
 public interface OutpatientDao {
     @Cacheable(cacheNames = {"employees"},key = "#p0",unless = "#result == null")
     List<Employee> findByDepartId(String departId);
+
+    void updateMedicalRecord(String id, Date date);
 }

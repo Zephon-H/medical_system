@@ -29,4 +29,16 @@ public class PrescriptionService {
     public Prescription findByRecordId(String recordId) {
         return prescriptionDao.findByRecordId(recordId);
     }
+
+    public void updatePrescription(Prescription prescription,String recordId) {
+        List<PresDrug> drugList = prescription.getDrugList();
+        for (PresDrug presDrug : drugList) {
+            presDrug.setRecordId(recordId);
+            if(presDrug.getCount()==0){
+                prescriptionDao.deleteByPresDrug(presDrug);
+            }else{
+                prescriptionDao.updatePresDrug(presDrug);
+            }
+        }
+    }
 }

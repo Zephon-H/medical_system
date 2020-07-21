@@ -14,24 +14,46 @@
             <result column="price" property="drug.price"/>
             <result column="update_time" property="drug.updateTime"/>
             <result column="del_flag" property="drug.delFlag"/>
-<!--                        <association property="drug" column="drug_id" javaType="com.zephon.common.model.Drug">-->
-<!--                            &lt;!&ndash; mybatis bug 报错 &ndash;&gt;-->
-<!--                            <id property="id" column="drug_id"/>-->
-<!--                            <result property="drugCode" column="drug_code"/>-->
-<!--                            <result property="drugName" column="drug_name"/>-->
-<!--                            <result property="unit" column="unit"/>-->
-<!--                            <result property="price" column="price"/>-->
-<!--                            <result property="updateTime" column="updateTime"/>-->
-<!--                            <result property="delFlag" column="del_flag"/>-->
-<!--                        </association>-->
+            <!--                        <association property="drug" column="drug_id" javaType="com.zephon.common.model.Drug">-->
+            <!--                            &lt;!&ndash; mybatis bug 报错 &ndash;&gt;-->
+            <!--                            <id property="id" column="drug_id"/>-->
+            <!--                            <result property="drugCode" column="drug_code"/>-->
+            <!--                            <result property="drugName" column="drug_name"/>-->
+            <!--                            <result property="unit" column="unit"/>-->
+            <!--                            <result property="price" column="price"/>-->
+            <!--                            <result property="updateTime" column="updateTime"/>-->
+            <!--                            <result property="delFlag" column="del_flag"/>-->
+            <!--                        </association>-->
         </collection>
     </resultMap>
+
     <select id="findAll" resultMap="presMap">
         select *
-        from tb_drug_medical_record, tb_drug td where tb_drug_medical_record.drug_id = td.id
+        from tb_drug_medical_record,
+             tb_drug td
+        where tb_drug_medical_record.drug_id = td.id
+          and tb_drug_medical_record.record_id in (select id from tb_medical_record where pay_status = '1');
     </select>
     <select id="findByRecordId" resultMap="presMap">
-        select * from tb_drug_medical_record tdmr, tb_drug td where tdmr.record_id=#{recordId} and tdmr.drug_id = td.id
+        select *
+        from tb_drug_medical_record tdmr,
+             tb_drug td
+        where tdmr.record_id = #{recordId}
+          and tdmr.drug_id = td.id
     </select>
+
+    <update id="updatePresDrug" parameterType="com.zephon.drug.pojo.PresDrug">
+        update medical.tb_drug_medical_record tdmr
+        set tdmr.drug_count = #{count}
+        where tdmr.record_id = #{recordId}
+          and tdmr.drug_id = #{drug.id}
+    </update>
+
+    <delete id="deleteByPresDrug">
+        delete
+        from medical.tb_drug_medical_record
+        where record_id = #{recordId}
+          and drug_id = #{drug.id}
+    </delete>
 
 </mapper>

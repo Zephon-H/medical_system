@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zephon.outpatient.dao.OutpatientDao">
+    <update id="updateMedicalRecord">
+        update medical.tb_medical_record set medical.tb_medical_record.pay_status = 1,medical.tb_medical_record.pay_time = #{param2} where id=#{param1}
+    </update>
     <select id="findByDepartId" resultType="com.zephon.common.model.Employee">
         select *
         from tb_employee

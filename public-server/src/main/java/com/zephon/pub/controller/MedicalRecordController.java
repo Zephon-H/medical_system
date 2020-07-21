@@ -6,6 +6,7 @@ import com.zephon.pub.service.MedicalRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +26,6 @@ import java.util.List;
  * @Package com.zephon.pub.controller
  * @date 2020/7/16 上午8:44
  * @Copyright ©
- *
  */
 @RestController
 @RequestMapping("/record")
@@ -33,68 +33,78 @@ import java.util.List;
 public class MedicalRecordController {
     @Autowired
     private MedicalRecordService medicalRecordService;
+
     @PostMapping()
-    @ApiOperation(value="添加病历", notes="")
-    @ApiImplicitParam(name="access-token",paramType = "header")
-    public Result save(@RequestBody MedicalRecord medicalRecord){
+    @ApiOperation(value = "添加病历", notes = "")
+    @ApiImplicitParam(name = "access-token", paramType = "header")
+    public Result save(@RequestBody MedicalRecord medicalRecord) {
         try {
             MedicalRecord res = medicalRecordService.save(medicalRecord);
-            return new Result("添加成功",200,res);
+            return new Result("添加成功", 200, res);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result("添加失败",500);
+            return new Result("添加失败", 500);
         }
     }
+
     @GetMapping("/{id}")
-    @ApiOperation(value="根据ID查询病历", notes="")
-    @ApiImplicitParam(name="access-token",paramType = "header")
-    public Result findById(@PathVariable("id") String id){
+    @ApiOperation(value = "根据ID查询病历", notes = "")
+    @ApiImplicitParam(name = "access-token", paramType = "header")
+    public Result findById(@PathVariable("id") String id) {
         try {
             MedicalRecord medicalRecord = medicalRecordService.findById(id);
-            if(medicalRecord!=null){
-                return new Result("查询成功",200,medicalRecord);
+            if (medicalRecord != null) {
+                return new Result("查询成功", 200, medicalRecord);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return new Result("查询失败",500);
+        return new Result("查询失败", 500);
     }
+
     @GetMapping()
-    @ApiOperation(value="查询所有病历", notes="")
-    @ApiImplicitParam(name="access-token",paramType = "header")
-    public Result findAll(@RequestParam(value = "page",defaultValue = "1",required = false)Integer page,
-                          @RequestParam(value = "pageSize",defaultValue = "10",required = false)Integer pageSize){
-        if(page!=null&&pageSize!=null){
-            return new Result("查询成功",200, medicalRecordService.findAll(page,pageSize));
+    @ApiOperation(value = "查询所有病历", notes = "")
+    @ApiImplicitParam(name = "access-token", paramType = "header")
+    public Result findAll(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+                          @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
+                          @ApiParam("0：未支付，1：已支付，-1：全部") @RequestParam(value = "requiredPayStatus", defaultValue = "-1", required = false) Integer requiredPayStatus) {
+        if (page != null && pageSize != null) {
+            if (requiredPayStatus != -1) {
+                return new Result("查询成功", 200, medicalRecordService.findAll(page, pageSize, requiredPayStatus));
+            } else {
+                return new Result("查询成功", 200, medicalRecordService.findAll(page, pageSize));
+            }
         }
         List<MedicalRecord> list = medicalRecordService.findAll();
-        if(list!=null){
-            return new Result("查询成功",200,list);
+        if (list != null) {
+            return new Result("查询成功", 200, list);
         }
-        return new Result("查询失败",500);
+        return new Result("查询失败", 500);
     }
+
     @PutMapping()
-    @ApiOperation(value="更新病历信息", notes="")
-    @ApiImplicitParam(name="access-token",paramType = "header")
-    public Result update(@RequestBody MedicalRecord medicalRecord){
+    @ApiOperation(value = "更新病历信息", notes = "")
+    @ApiImplicitParam(name = "access-token", paramType = "header")
+    public Result update(@RequestBody MedicalRecord medicalRecord) {
         try {
             medicalRecordService.save(medicalRecord);
-            return new Result("更新成功",200);
+            return new Result("更新成功", 200);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result("更新失败",500);
+            return new Result("更新失败", 500);
         }
     }
+
     @DeleteMapping("/{id}")
-    @ApiOperation(value="删除病历", notes="")
-    @ApiImplicitParam(name="access-token",paramType = "header")
-    public Result delete(@PathVariable String id){
+    @ApiOperation(value = "删除病历", notes = "")
+    @ApiImplicitParam(name = "access-token", paramType = "header")
+    public Result delete(@PathVariable String id) {
         try {
             medicalRecordService.deleteById(id);
-            return new Result("删除成功",200);
+            return new Result("删除成功", 200);
         } catch (Exception e) {
             e.printStackTrace();
-            return new Result("删除失败",500);
+            return new Result("删除失败", 500);
         }
     }
 }

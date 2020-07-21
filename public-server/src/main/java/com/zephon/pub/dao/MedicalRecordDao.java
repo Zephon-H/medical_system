@@ -4,6 +4,8 @@ import com.zephon.common.dao.BaseDao;
 import com.zephon.common.model.MedicalRecord;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Zephon
  * @version V1.0
@@ -13,4 +15,5 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface MedicalRecordDao extends BaseDao<MedicalRecord> {
+    List<MedicalRecord> findAllWithPatyStatus(String payStatus);
 }
