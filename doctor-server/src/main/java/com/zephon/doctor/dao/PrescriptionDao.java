@@ -16,5 +16,9 @@ public interface PrescriptionDao {
 
     void insert(PresDrug presDrug);
 
+    void update(PresDrug presDrug);
+
+    PresDrug findByDrugIdAndRecordId(PresDrug presDrug);
+
     void updateRecord(Prescription prescription);
 }

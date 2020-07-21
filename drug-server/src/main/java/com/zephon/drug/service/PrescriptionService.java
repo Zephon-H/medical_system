@@ -1,10 +1,13 @@
 package com.zephon.drug.service;
 
+import com.zephon.common.model.Drug;
 import com.zephon.drug.dao.PrescriptionDao;
+import com.zephon.drug.pojo.PresDrug;
 import com.zephon.drug.pojo.Prescription;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**

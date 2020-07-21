@@ -1,5 +1,6 @@
 package com.zephon.drug.dao;
 
+import com.zephon.common.model.Drug;
 import com.zephon.drug.pojo.Prescription;
 import org.springframework.stereotype.Repository;
 

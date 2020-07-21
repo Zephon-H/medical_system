@@ -5,20 +5,30 @@
         <result column="record_id" property="recordId"/>
         <collection property="drugList" column="drug_id" ofType="com.zephon.drug.pojo.PresDrug">
             <result column="drug_count" property="count"/>
-            <association property="drug" column="drug_id" javaType="com.zephon.common.model.Drug">
-                <!-- mybatis bug 报错 -->
-                <id property="id" column="drug_id"/>
-                <result property="drugCode" column="drug_code"/>
-                <result property="drugName" column="drug_name"/>
-                <result property="unit" column="unit"/>
-                <result property="price" column="price"/>
-                <result property="updateTime" column="updateTime"/>
-                <result property="delFlag" column="del_flag"/>
-            </association>
+            <result column="record_id" property="recordId"/>
+
+            <result column="id" property="drug.id"/>
+            <result column="drug_name" property="drug.drugName"/>
+            <result column="drug_code" property="drug.drugCode"/>
+            <result column="unit" property="drug.unit"/>
+            <result column="price" property="drug.price"/>
+            <result column="update_time" property="drug.updateTime"/>
+            <result column="del_flag" property="drug.delFlag"/>
+<!--                        <association property="drug" column="drug_id" javaType="com.zephon.common.model.Drug">-->
+<!--                            &lt;!&ndash; mybatis bug 报错 &ndash;&gt;-->
+<!--                            <id property="id" column="drug_id"/>-->
+<!--                            <result property="drugCode" column="drug_code"/>-->
+<!--                            <result property="drugName" column="drug_name"/>-->
+<!--                            <result property="unit" column="unit"/>-->
+<!--                            <result property="price" column="price"/>-->
+<!--                            <result property="updateTime" column="updateTime"/>-->
+<!--                            <result property="delFlag" column="del_flag"/>-->
+<!--                        </association>-->
         </collection>
     </resultMap>
     <select id="findAll" resultMap="presMap">
-        select * from tb_drug_medical_record left join tb_drug td on tb_drug_medical_record.drug_id = td.id
+        select *
+        from tb_drug_medical_record, tb_drug td where tb_drug_medical_record.drug_id = td.id
     </select>
 
 </mapper>

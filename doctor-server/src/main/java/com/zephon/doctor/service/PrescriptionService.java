@@ -23,7 +23,13 @@ public class PrescriptionService {
     public void save(Prescription prescription) {
         List<PresDrug> drugList = prescription.getDrugList();
         for (PresDrug presDrug : drugList) {
-            prescriptionDao.insert(presDrug);
+            presDrug.setRecordId(prescription.getRecordId());
+            PresDrug p = prescriptionDao.findByDrugIdAndRecordId(presDrug);
+            if(p!=null){
+                prescriptionDao.update(presDrug);
+            }else{
+                prescriptionDao.insert(presDrug);
+            }
         }
         prescriptionDao.updateRecord(prescription);
     }

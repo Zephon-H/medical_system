@@ -29,4 +29,5 @@ spring:
 #      defaultZone: http://127.0.0.1:7001/eureka
 mybatis:
   mapper-locations: classpath:/mappers/*.xml
-  map-underscore-to-camel-case: true
+  configuration:
+    map-underscore-to-camel-case: true

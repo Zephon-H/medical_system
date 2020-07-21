@@ -5,6 +5,18 @@
         insert into tb_drug_medical_record(drug_id, record_id, drug_count)
         values (#{drugId}, #{recordId}, #{count})
     </insert>
+    <update id="update" parameterType="com.zephon.doctor.pojo.PresDrug">
+        update tb_drug_medical_record
+        set drug_count = #{count}
+        where drug_id = #{drugId}
+          and record_id = #{recordId}
+    </update>
+    <select id="findByDrugIdAndRecordId" resultType="com.zephon.doctor.pojo.PresDrug">
+        select drug_id as drugId,record_id as recordId,drug_count as count
+        from tb_drug_medical_record
+        where drug_id = #{drugId}
+          and record_id = #{recordId}
+    </select>
     <update id="updateRecord" parameterType="com.zephon.doctor.pojo.Prescription">
         update tb_medical_record
         <set>
