@@ -67,9 +67,9 @@ public class MedicalRecordController {
     @ApiImplicitParam(name = "access-token", paramType = "header")
     public Result findAll(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
                           @RequestParam(value = "pageSize", defaultValue = "10", required = false) Integer pageSize,
-                          @ApiParam("0：未支付，1：已支付，-1：全部") @RequestParam(value = "requiredPayStatus", defaultValue = "-1", required = false) Integer requiredPayStatus) {
+                          @ApiParam("0：未支付，1：已支付，3：全部") @RequestParam(value = "requiredPayStatus", defaultValue = "3", required = false) Integer requiredPayStatus) {
         if (page != null && pageSize != null) {
-            if (requiredPayStatus != -1) {
+            if (requiredPayStatus != 3) {
                 return new Result("查询成功", 200, medicalRecordService.findAll(page, pageSize, requiredPayStatus));
             } else {
                 return new Result("查询成功", 200, medicalRecordService.findAll(page, pageSize));
