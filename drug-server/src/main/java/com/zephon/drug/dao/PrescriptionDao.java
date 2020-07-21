@@ -16,4 +16,6 @@ import java.util.List;
 @Repository
 public interface PrescriptionDao {
     List<Prescription> findAll();
+
+    Prescription findByRecordId(String recordId);
 }

@@ -25,4 +25,8 @@ public class PrescriptionService {
     public List<Prescription> findAll() {
         return prescriptionDao.findAll();
     }
+
+    public Prescription findByRecordId(String recordId) {
+        return prescriptionDao.findByRecordId(recordId);
+    }
 }

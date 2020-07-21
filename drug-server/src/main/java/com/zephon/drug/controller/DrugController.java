@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,5 +33,17 @@ public class DrugController {
     public Result findAllPrescription(){
         List<Prescription> list = prescriptionService.findAll();
         return new Result("查询成功",200,list);
+    }
+    @GetMapping("/{recordId}")
+    @ApiOperation(value="根据recordId查询处方", notes="")
+    @ApiImplicitParam(name="access-token",paramType = "header")
+    public Result findById(@PathVariable("recordId")String recordId){
+        try {
+            Prescription p =  prescriptionService.findByRecordId(recordId);
+            return new Result("查询成功",200,p);
+        } catch (Exception e) {
+//            e.printStackTrace();
+        }
+        return new Result("查询失败",500);
     }
 }

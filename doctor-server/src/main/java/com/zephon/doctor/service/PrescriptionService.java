@@ -28,7 +28,7 @@ public class PrescriptionService {
             if(p!=null){
                 prescriptionDao.update(presDrug);
             }else{
-                prescriptionDao.insert(presDrug);
+                prescriptionDao.insert(presDrug );
             }
         }
         prescriptionDao.updateRecord(prescription);

@@ -3,6 +3,7 @@ package com.zephon.outpatient.controller;
 import com.zephon.common.model.Employee;
 import com.zephon.common.model.MedicalRecord;
 import com.zephon.common.pojo.Result;
+import com.zephon.outpatient.api.DrugApi;
 import com.zephon.outpatient.api.MedicalRecordApi;
 import com.zephon.outpatient.service.OutpatientService;
 import io.swagger.annotations.Api;
@@ -35,6 +36,15 @@ import java.util.Map;
 public class OutpatientController {
     @Autowired
     private MedicalRecordApi medicalRecordApi;
+    @Autowired
+    private DrugApi drugApi;
+
+    @GetMapping("/{recordId}")
+    @ApiOperation(value="根据病历ID查询处方", notes="")
+    @ApiImplicitParam(name="access-token",paramType = "header")
+    public Result findById(@PathVariable("recordId") String recordId){
+        return drugApi.findById(recordId);
+    }
 
     @PutMapping("")
     @ApiOperation(value="药品收费", notes="")

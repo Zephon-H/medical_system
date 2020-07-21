@@ -30,5 +30,8 @@
         select *
         from tb_drug_medical_record, tb_drug td where tb_drug_medical_record.drug_id = td.id
     </select>
+    <select id="findByRecordId" resultMap="presMap">
+        select * from tb_drug_medical_record tdmr, tb_drug td where tdmr.record_id=#{recordId} and tdmr.drug_id = td.id
+    </select>
 
 </mapper>
